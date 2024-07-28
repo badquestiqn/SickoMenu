@@ -202,18 +202,18 @@ namespace PlayersTab {
 						RepairSabotage(*Game::pLocalPlayer);
 						State.rpcQueue.push(new RpcForceMeeting(*Game::pLocalPlayer, {}));
 					}
+				}
 				ImGui::SameLine();
 			}
 			if (ImGui::Button("Votekick All")) {
 				for (auto player : GetAllPlayerControl()) {
 					auto playerData = GetPlayerData(player);
-					if (player != *Game::pLocalPlayer) {
-						if (IsInGame()) {
-							State.rpcQueue.push(new RpcVoteKick(player));
-						}
-						else if (IsInLobby()) {
-							State.lobbyRpcQueue.push(new RpcVoteKick(player));
-						}
+					if (player == *Game::pLocalPlayer) return;
+					if (IsInGame()) {
+						State.rpcQueue.push(new RpcVoteKick(player));
+					}
+					else if (IsInLobby()) {
+						State.lobbyRpcQueue.push(new RpcVoteKick(player));
 					}
 				}
 			}
@@ -729,7 +729,7 @@ namespace PlayersTab {
 									validPlayer.get_PlayerControl()->fields.protectedByGuardianId < 0 || State.BypassAngelProt));
 							}
 						}
-						murderDelay = 10;
+						murderDelay = 8;
 						murderCount--;
 					}
 					else {
