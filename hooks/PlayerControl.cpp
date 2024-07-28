@@ -139,34 +139,34 @@ void dPlayerControl_FixedUpdate(PlayerControl* __this, MethodInfo* method) {
 					if (client->fields.Character == *Game::pLocalPlayer && State.SpoofPlatform) platform = Platforms__Enum(State.FakePlatform + 1); //fix incorrect platform showing for yourself
 					switch (platform) {
 					case Platforms__Enum::StandaloneEpicPC:
-						platformId = "Epic Games - PC";
+						platformId = "Epic Games";
 						break;
 					case Platforms__Enum::StandaloneSteamPC:
-						platformId = "Steam - PC";
+						platformId = "Steam";
 						break;
 					case Platforms__Enum::StandaloneMac:
 						platformId = "Mac";
 						break;
 					case Platforms__Enum::StandaloneWin10:
-						platformId = "Microsoft Store - PC";
+						platformId = "Microsoft Store";
 						break;
 					case Platforms__Enum::StandaloneItch:
-						platformId = "itch.io - PC";
+						platformId = "itch.io";
 						break;
 					case Platforms__Enum::IPhone:
-						platformId = "iOS/iPadOS - Mobile";
+						platformId = "iOS/iPadOS";
 						break;
 					case Platforms__Enum::Android:
-						platformId = "Android - Mobile";
+						platformId = "Android";
 						break;
 					case Platforms__Enum::Switch:
-						platformId = "Nintendo Switch - Console";
+						platformId = "Nintendo Switch";
 						break;
 					case Platforms__Enum::Xbox:
-						platformId = "Xbox - Console";
+						platformId = "Xbox";
 						break;
 					case Platforms__Enum::Playstation:
-						platformId = "Playstation - Console";
+						platformId = "Playstation";
 						break;
 					default:
 						platformId = "Unknown Platform";
@@ -809,7 +809,7 @@ void dPlayerControl_CmdCheckMurder(PlayerControl* __this, PlayerControl* target,
 			}
 			else if (State.AlwaysUseKillExploit || State.NoAbilityCD)
 				PlayerControl_RpcMurderPlayer(*Game::pLocalPlayer, target, true, NULL);
-			else if (State.RealRole != RoleTypes__Enum::Impostor && State.RealRole != RoleTypes__Enum::Shapeshifter)
+			else if (State.RealRole != RoleTypes__Enum::Impostor && State.RealRole != RoleTypes__Enum::Shapeshifter && State.RealRole != RoleTypes__Enum::Phantom)
 				PlayerControl_RpcMurderPlayer(*Game::pLocalPlayer, target, true, NULL);
 			else if ((*Game::pLocalPlayer)->fields.killTimer > 0)
 				PlayerControl_RpcMurderPlayer(*Game::pLocalPlayer, target, true, NULL);

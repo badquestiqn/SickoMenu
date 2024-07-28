@@ -69,7 +69,8 @@ void dShipStatus_RpcCloseDoorsOfType (ShipStatus* __this, SystemTypes__Enum type
 
 void dGameStartManager_Update(GameStartManager* __this, MethodInfo* method) {
 	try {
-		if (State.HideCode && IsStreamerMode() && !State.PanicMode) {
+		if (!IsInOnlineLobby()) return;
+		if (State.HideCode && !State.PanicMode) {
 			std::string customCode = State.HideCode ? State.customCode : "******";
 			if (State.RgbLobbyCode)
 				TMP_Text_set_text((TMP_Text*)__this->fields.GameRoomNameCode, convert_to_string(State.rgbCode + customCode), NULL);

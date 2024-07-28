@@ -287,6 +287,11 @@ namespace GameTab {
                 State.Save();
             }
             ImGui::SameLine();
+            if (ToggleButton("In AUM Chat", &State.InAumChat))
+            {
+                State.Save();
+            }
+            ImGui::SameLine();
             if (!State.SafeMode && ToggleButton("Spam by Everyone", &State.ChatSpamEveryone))
             {
                 State.Save();

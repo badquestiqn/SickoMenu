@@ -135,34 +135,34 @@ namespace PlayersTab {
 					if (GetPlayerControlById(selectedPlayer.get_PlayerData()->fields.PlayerId)->fields._.OwnerId == client->fields.Id) {
 						switch (client->fields.PlatformData->fields.Platform) {
 						case Platforms__Enum::StandaloneEpicPC:
-							platform = "Epic Games (PC)";
+							platform = "Epic Games";
 							break;
 						case Platforms__Enum::StandaloneSteamPC:
-							platform = "Steam (PC)";
+							platform = "Steam";
 							break;
 						case Platforms__Enum::StandaloneMac:
 							platform = "Mac";
 							break;
 						case Platforms__Enum::StandaloneWin10:
-							platform = "Microsoft Store (PC)";
+							platform = "Microsoft Store";
 							break;
 						case Platforms__Enum::StandaloneItch:
-							platform = "itch.io (PC)";
+							platform = "itch.io";
 							break;
 						case Platforms__Enum::IPhone:
-							platform = "iOS/iPadOS (Mobile)";
+							platform = "iOS/iPadOS";
 							break;
 						case Platforms__Enum::Android:
-							platform = "Android (Mobile)";
+							platform = "Android";
 							break;
 						case Platforms__Enum::Switch:
-							platform = "Nintendo Switch (Console)";
+							platform = "Nintendo Switch";
 							break;
 						case Platforms__Enum::Xbox:
-							platform = "Xbox (Console)";
+							platform = "Xbox";
 							break;
 						case Platforms__Enum::Playstation:
-							platform = "Playstation (Console)";
+							platform = "Playstation";
 							break;
 						default:
 							platform = "Unknown";
@@ -201,6 +201,19 @@ namespace PlayersTab {
 					if (ImGui::Button("Call Meeting")) {
 						RepairSabotage(*Game::pLocalPlayer);
 						State.rpcQueue.push(new RpcForceMeeting(*Game::pLocalPlayer, {}));
+					}
+				ImGui::SameLine();
+			}
+			if (ImGui::Button("Votekick All")) {
+				for (auto player : GetAllPlayerControl()) {
+					auto playerData = GetPlayerData(player);
+					if (player != *Game::pLocalPlayer) {
+						if (IsInGame()) {
+							State.rpcQueue.push(new RpcVoteKick(player));
+						}
+						else if (IsInLobby()) {
+							State.lobbyRpcQueue.push(new RpcVoteKick(player));
+						}
 					}
 				}
 			}
@@ -289,7 +302,7 @@ namespace PlayersTab {
 						previousPlayerPosition = GetTrueAdjustedPosition(*Game::pLocalPlayer);
 						for (auto p : selectedPlayers)
 							State.rpcQueue.push(new CmdCheckMurder(p));
-						framesPassed = 40;
+						framesPassed = 10;
 					}
 				}
 				else if (IsInGame()) {// if (!State.SafeMode)
@@ -700,7 +713,7 @@ namespace PlayersTab {
 				static int murderDelay = 0;
 				if (IsInGame() && ImGui::Button("Murder Loop")) {
 					murderLoop = true;
-					murderCount = 20; //controls how many times the player is to be murdered
+					murderCount = 50; //controls how many times the player is to be murdered
 				}
 
 				if (murderDelay <= 0) {
@@ -716,7 +729,7 @@ namespace PlayersTab {
 									validPlayer.get_PlayerControl()->fields.protectedByGuardianId < 0 || State.BypassAngelProt));
 							}
 						}
-						murderDelay = 15;
+						murderDelay = 10;
 						murderCount--;
 					}
 					else {

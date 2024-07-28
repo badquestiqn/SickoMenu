@@ -158,6 +158,7 @@ public:
 int randi(int lo, int hi);
 ImVec4 AmongUsColorToImVec4(const Color& color);
 ImVec4 AmongUsColorToImVec4(const Color32& color);
+bool IsInOnlineLobby();
 bool IsInLobby();
 bool IsHost();
 bool IsModdedHost();

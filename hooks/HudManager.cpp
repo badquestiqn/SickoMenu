@@ -161,7 +161,7 @@ void dPingTracker_Update(PingTracker* __this, MethodInfo* method) {
 			else spectating = "";
 			std::string hostText = State.ShowHost && IsInGame() ?
 				(IsHost() ? " ~ You are Host" : std::format(" ~ Host: {}", GetHostUsername(true))) : "";
-			std::string voteKicksText = (State.ShowVoteKicks && State.VoteKicks > 0) ? std::format(" ~ Vote Kicks: {}", State.VoteKicks) : "";
+			std::string voteKicksText = (State.ShowVoteKicks && State.VoteKicks > 0) ? std::format(" ~ {}Vote Kicks: {}/3</color>", State.VoteKicks >= 2 ? "<#f00>" : "", State.VoteKicks) : "";
 			std::string watermarkText = std::format("<size={}%><#0f0>Sicko</color><#f00>Menu</color> <#fb0>{}</color> by <#9ef>goaty</color> ~ ", spectating == "" ? 100 : 50, State.SickoVersion);
 			std::string pingText = std::format("{}{}{}{}{}{}{}{}{}</size>", State.HideWatermark ? "" : watermarkText, ping, fpsText, hostText, voteKicksText, autoKill, noClip, freeCam, spectating, IsInGame() ? "" : "");
 			app::TMP_Text_set_text((app::TMP_Text*)__this->fields.text, convert_to_string(pingText), nullptr);

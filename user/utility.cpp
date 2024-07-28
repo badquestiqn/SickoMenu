@@ -272,6 +272,12 @@ ImVec4 AmongUsColorToImVec4(const Color32& color) {
 #define OnlineInLobby (((*Game::pAmongUsClient)->fields._.NetworkMode == NetworkModes__Enum::OnlineGame) && ((*Game::pAmongUsClient)->fields._.GameState == InnerNetClient_GameStates__Enum::Joined))
 #define TutorialScene (State.CurrentScene.compare("Tutorial") == 0)
 
+bool IsInOnlineLobby() {
+	if (Object_1_IsNull((Object_1*)*Game::pAmongUsClient)) return false;
+	if (!app::GameManager_get_Instance(nullptr)) return false;
+	return (OnlineInLobby) && Object_1_IsNotNull((Object_1*)*Game::pLocalPlayer);
+}
+
 bool IsInLobby() {
 	if (Object_1_IsNull((Object_1*)*Game::pAmongUsClient)) return false;
 	if (!app::GameManager_get_Instance(nullptr)) return false;
@@ -1185,7 +1191,7 @@ std::string GetRoleName(RoleBehaviour* roleBehaviour, bool abbreviated /* = fals
 		case RoleTypes__Enum::Tracker:
 			return (abbreviated ? "Tra" : "Tracker");
 		case RoleTypes__Enum::Phantom:
-			return (abbreviated ? "Ph" : "Phantom");
+			return (abbreviated ? "Pha" : "Phantom");
 		default:
 			return (abbreviated ? "Unk" : "Unknown");
 	}

@@ -87,6 +87,7 @@ public:
     bool NoGameEnd = false;
     bool ChatSpam = false;
     bool ChatSpamEveryone = false;
+    bool InAumChat = false;
 
     bool ShowProtections = false;
     std::map<Game::PlayerId, std::pair<Game::ColorId, float/*Time*/>> protectMonitor;

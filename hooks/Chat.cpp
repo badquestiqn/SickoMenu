@@ -98,7 +98,7 @@ void dChatController_Update(ChatController* __this, MethodInfo* method)
 	__this->fields.freeChatField->fields.textArea->fields.allowAllCharacters = true;
 	__this->fields.freeChatField->fields.textArea->fields.AllowEmail = true;
 	__this->fields.freeChatField->fields.textArea->fields.AllowSymbols = true;
-	if (!State.SafeMode)
+	if (!State.SafeMode || State.InAumChat)
 		__this->fields.timeSinceLastMessage = 420.69f; //we can set this to anything more than or equal to 3 and it'll work
 
 	if (State.MessageSent && State.SafeMode) {
@@ -156,6 +156,15 @@ void dPlayerControl_RpcSendChat(PlayerControl* __this, String* chatText, MethodI
 			if (IsInGame()) State.rpcQueue.push(new RpcForceAumChat(PlayerSelection(playerToChatAs), convert_from_string(chatText).substr(5), true));
 			if (IsInLobby()) State.lobbyRpcQueue.push(new RpcForceAumChat(PlayerSelection(playerToChatAs), convert_from_string(chatText).substr(5), true));
 			return; //we don't want the chat to know we're using "aum"
+		}
+		if (State.ReadAndSendAumChat && convert_from_string(chatText) == "/aum") {
+			State.InAumChat = !State.InAumChat;
+			return;
+		}
+		if (State.ReadAndSendAumChat && State.InAumChat) {
+			if (IsInGame()) State.rpcQueue.push(new RpcForceAumChat(PlayerSelection(playerToChatAs), convert_from_string(chatText), true));
+			if (IsInLobby()) State.lobbyRpcQueue.push(new RpcForceAumChat(PlayerSelection(playerToChatAs), convert_from_string(chatText), true));
+			return;
 		}
 		if (State.activeWhisper && State.playerToWhisper.has_value()) {
 			MessageWriter* writer = InnerNetClient_StartRpcImmediately((InnerNetClient*)(*Game::pAmongUsClient),

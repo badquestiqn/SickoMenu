@@ -49,10 +49,10 @@ namespace SettingsTab {
 			if (ToggleButton("Allow Activating Keybinds while Chatting", &State.KeybindsWhileChatting)) {
 				State.Save();
 			}
-			if (ToggleButton("Always Show Menu on Startup", &State.ShowMenuOnStartup)) {
+			if (ToggleButton("Show Menu on Startup", &State.ShowMenuOnStartup)) {
 				State.Save();
 			}
-			if (ToggleButton("Panic (Disable SickoMenu)", &State.PanicMode)) {
+			if (ToggleButton("Panic", &State.PanicMode)) {
 				State.Save();
 			}
 			ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
@@ -149,7 +149,7 @@ namespace SettingsTab {
 			if (InputString("Custom Code", &State.customCode)) {
 				State.Save();
 			}
-			if (ToggleButton("Replace Streamer Mode Lobby Code", &State.HideCode)) {
+			if (ToggleButton("Replace Visualized Lobby Code", &State.HideCode)) {
 				State.Save();
 			}
 			ImGui::SameLine();
@@ -183,8 +183,6 @@ namespace SettingsTab {
 			if (ToggleButton("Allow other SickoMenu users to see you're using SickoMenu", &State.SickoDetection)) {
 				State.Save();
 			}
-
-			ImGui::Text("Keep safe mode on in official servers (NA, Europe, Asia) to prevent anticheat detection!");
 		}
 		if (openSpoofing) {
 			if (ToggleButton("Spoof Guest Account", &State.SpoofGuestAccount)) {
